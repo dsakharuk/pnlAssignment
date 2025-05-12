@@ -16,8 +16,8 @@ int lifo(){
   return 0;
 }
 
-std::vector<std::vector<string>> readInput(const string filePath){
-  std::vector<std::vector<string>> input;
+std::vector<std::vector<std::string>> readInput(const std::string filePath){
+  std::vector<std::vector<std::string>> input;
 
   std::ifstream file(filePath);
   std::string line;
@@ -31,7 +31,7 @@ std::vector<std::vector<string>> readInput(const string filePath){
         row.push_back(value);
     }
 
-    data.push_back(row);
+    input.push_back(row);
   }
 
   file.close();
@@ -40,11 +40,17 @@ std::vector<std::vector<string>> readInput(const string filePath){
 
 int main(int argc, char* argv[]) {
   //get inputs
-  std::string filePath = argv[1];
-  std::string logic = argv[2];
+  std::string filePath, logic;
+  if(argc >1){
+    filePath = argv[1];
+    logic = argv[2];
+  }
+  else{
+    return 0;
+  }
 
   //process csv file
-  std::vector<std::vector<string>> input = readInput(filePath);
+  std::vector<std::vector<std::string>> input = readInput(filePath);
 
   //different methods based on logic
 
