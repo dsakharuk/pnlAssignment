@@ -1,0 +1,3 @@
+/home/danie/pnlProject/pnlAssignment/build/CMakeFiles/myProject.dir
+/home/danie/pnlProject/pnlAssignment/build/CMakeFiles/edit_cache.dir
+/home/danie/pnlProject/pnlAssignment/build/CMakeFiles/rebuild_cache.dir
