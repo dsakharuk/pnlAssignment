@@ -9,6 +9,10 @@
 #include <queue>
 #include <cmath>
 
+///
+/// I used printf because I have some weird issue in env with ostream crashing with cout.
+///
+
 struct Trade
 {
   int timestamp;
