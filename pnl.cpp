@@ -7,6 +7,7 @@
 #include <queue>
 #include <unordered_map>
 #include <queue>
+#include <cmath>
 
 struct Trade
 {
@@ -36,13 +37,13 @@ double calculatePnl(std::string direction, int shares1, double price1, int share
 //fifo logic
 void fifo(std::vector<Trade> & input){
   //print header first
-  printf("TIMESTAMP,SYMBOL,PNL"); 
+  printf("TIMESTAMP,SYMBOL,PNL\n"); 
 
   // map from symbol to its queue of trades
   std::unordered_map<std::string, std::queue<Trade>> mp;
   
   //loop through all input trades
-  for(auto trade:input){
+  for(auto & trade:input){
     //symbol not in map so add to map and continue
     if(mp.find(trade.symbol) == mp.end()){
       mp[trade.symbol] = std::queue<Trade>();
@@ -74,15 +75,15 @@ void fifo(std::vector<Trade> & input){
 	  trade.shares -= t.shares;
 	  //get pnl for transaction
 	  pnl += calculatePnl(t.direction, t.shares, t.price, t.shares, trade.price);
-	  
+	  continue;
 	}
 	//opposite order partiall cancels old order
 	else{
 	  //get rid of shares from queue
 	  tmp.front().shares -= trade.shares;
-	  trade.shares = 0;
 	  //get pnl from transaction
-	  pnl += calculatePnl(tmp.front().direction, trade.shares, tmp.front().price, trade.shares, trade.price);	  
+	  pnl += calculatePnl(tmp.front().direction, trade.shares, tmp.front().price, trade.shares, trade.price);
+	  trade.shares = 0;
 	}
       }
       //opposite order needs to be added to queue
@@ -91,8 +92,10 @@ void fifo(std::vector<Trade> & input){
       }
       //output to console
       output += std::to_string(pnl);
-      printf(output);
+      output += "\n";
+      printf(output.c_str());
     }
+    
     //trade is same as front of queue so we just add it
     else{
       mp[trade.symbol].push(trade);
@@ -104,8 +107,11 @@ void fifo(std::vector<Trade> & input){
 }
 
 //lifo logic
-int lifo(){
-  return 0;
+void lifo(){
+  //if I had time I would do similar logic to above but with a stack to deal with
+  //newest orders first
+
+  return;
 }
 
 std::vector<Trade> readInput(const std::string filePath){
@@ -155,7 +161,6 @@ int main(int argc, char* argv[]) {
 
   //different methods based on logic
 
-  int result;
   if(logic == "fifo"){
     fifo(input);
   }
@@ -165,8 +170,6 @@ int main(int argc, char* argv[]) {
   else{
     return 1;
   }
-
-  //std::vector<int> a;
-  //printf("Hello\n");
+  
   return 0;
 }
